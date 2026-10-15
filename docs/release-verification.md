@@ -1,5 +1,9 @@
 # Release verification
 
+Historical pre-cleanup verification. The library/CLI and its declaration/test
+tooling below have since been removed; these commands and counts describe only
+the recorded commit. Current service tests and coverage are in [testing.md](testing.md).
+
 Verified on 2026-10-15 from a fresh local clone at `df5fcfd3eb2aa5802c8e82461e659297b0598b31`.
 The following release commit changes documentation only; runtime, tests, lockfile
 and Docker build inputs are unchanged.

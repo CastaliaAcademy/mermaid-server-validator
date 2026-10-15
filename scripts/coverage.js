@@ -1,4 +1,4 @@
-// Instrument only our source, including real subprocesses and Node workers.
+// Instrument only our source, including real Bun subprocesses.
 // Bun's native coverage does not collect child-process or branch coverage.
 import { cp, mkdir, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -18,14 +18,14 @@ const raw = join(output, 'raw');
 await rm(output, {recursive: true, force: true});
 await mkdir(raw, {recursive: true});
 await mkdir(sandbox, {recursive: true});
-for (const name of ['src', 'tests', 'test', 'scripts', 'package.json', 'bunfig.toml', 'tsconfig.json']) {
+for (const name of ['src', 'tests', 'package.json', 'bunfig.toml']) {
   await cp(join(root, name), join(sandbox, name), {recursive: true});
 }
 await symlink(join(root, 'node_modules'), join(sandbox, 'node_modules'), 'dir');
 const map = createCoverageMap({});
 const instrumenter = createInstrumenter({esModules: true, compact: false});
 // Register before top-level await or worker work, and keep stdout protocol clean.
-// Unique IDs prevent worker threads and Bun test realms overwriting snapshots.
+// Unique IDs prevent subprocesses and Bun test realms overwriting snapshots.
 const collector = `
 import { writeFileSync as __coverageWrite } from 'node:fs';
 import { randomUUID as __coverageId } from 'node:crypto';
@@ -42,9 +42,7 @@ for (const name of await readdir(join(root, 'src'))) {
   const source = await readFile(path, 'utf8');
   const instrumented = instrumenter.instrumentSync(source, path);
   map.addFileCoverage(instrumenter.lastFileCoverage());
-  // Keep the CLI hashbang on the first line.
-  const split = instrumented.startsWith('#!') ? instrumented.indexOf('\n') + 1 : 0;
-  await writeFile(join(sandbox, 'src', name), instrumented.slice(0, split) + collector + instrumented.slice(split));
+  await writeFile(join(sandbox, 'src', name), collector + instrumented);
 }
 // Bun's test runner can finish without a normal process exit event.
 for (const name of await readdir(join(sandbox, 'tests'))) {
@@ -61,8 +59,6 @@ __coverageAfter(() => __coverageWrite(${JSON.stringify(raw)} + '/' + __coverageI
 const bun = process.env.BUN_EXECUTABLE || 'bun';
 const runs = [
   [bun, ['test', './tests']],
-  [process.execPath, ['--test', '--test-concurrency=1', ...
-    (await readdir(join(sandbox, 'test'))).filter(n => n.endsWith('.test.js')).map(n => `test/${n}`)]],
 ];
 let failed = false;
 for (const [command, args] of runs) {

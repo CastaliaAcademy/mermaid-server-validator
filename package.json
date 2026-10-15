@@ -9,41 +9,24 @@
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "packageManager": "pnpm@11.3.0",
-  "exports": {
-    ".": {
-      "types": "./src/index.d.ts",
-      "import": "./src/index.js"
-    }
-  },
-  "types": "./src/index.d.ts",
-  "bin": {
-    "castalia-mermaid-validate": "./src/cli.js"
-  },
-  "files": [
-    "src",
-    "README.md",
-    "LICENSE",
-    "docs"
-  ],
   "scripts": {
     "start": "bun src/server.js",
     "dev": "bun --watch src/server.js",
     "test": "bun test ./tests",
     "test:coverage": "node scripts/coverage.js",
-    "test:legacy": "node --test --test-concurrency=1 test/*.test.js",
-    "check": "tsc --noEmit",
-    "smoke:legacy": "node scripts/pack-smoke.js"
+    "check:openapi": "node scripts/check-openapi.js"
   },
   "dependencies": {
     "jsdom": "30.1.3",
     "mermaid": "12.1.0"
   },
   "devDependencies": {
-    "@types/node": "26.0.0",
+    "@apidevtools/swagger-parser": "13.1.0",
+    "ajv": "8.20.0",
     "istanbul-lib-coverage": "3.2.2",
     "istanbul-lib-instrument": "6.0.3",
     "istanbul-lib-report": "3.0.1",
     "istanbul-reports": "3.2.0",
-    "typescript": "5.9.3"
+    "yaml": "2.9.1"
   }
 }

@@ -1,4 +1,9 @@
-# Baseline and implementation handoff
+# Historical foundation baseline
+
+This records the pre-HTTP foundation stage, not current setup instructions.
+The separate Node library/CLI and its declaration tooling were subsequently
+removed. Current commands and coverage are in [testing.md](testing.md); runtime
+setup is in [operations.md](operations.md).
 
 ## Repository
 
@@ -31,8 +36,9 @@ registry/test reports were excluded rather than publishing them.
 - Bun **1.4.3** runtime; pnpm **11.3.0** is the only dependency manager. Both are
   explicitly pinned. Node engine range is retained for pnpm, TypeScript and the
   original regression suite, not as a second service runtime.
-- HTTP contract and runtime handoff are normative in [api.md](api.md). No HTTP
-  implementation is claimed by this card.
+- At this foundation stage, the HTTP contract and runtime handoff were recorded
+  in `docs/api.md`; no HTTP implementation was claimed by this card. The current
+  source of truth is [openapi.yaml](openapi.yaml); see [API guide](api.md).
 - `.bun-version` records the runtime version; Bun does not install itself from
   this file. `bunfig.toml` disables automatic dependency installation.
 - A project-local ignored Bun is available on this host at `.tools/bun/bun`.
@@ -55,19 +61,9 @@ registry/test reports were excluded rather than publishing them.
 - `pnpm test:legacy`: 44 passed, 0 failed on Node. This is preserved behavior,
   not proof that Node worker semantics are supported by Bun.
 
-The old README is preserved as [legacy-library.md](legacy-library.md) for context.
-Its packaging workflow, no-license statement and old limits describe historical
-behavior, not current service setup. Its `smoke:legacy` command uses npm as well
-as pnpm; it is NOT part of the new service install/test/container workflow.
+The original Node library README and packaging workflow are available in Git
+at the pre-HTTP snapshot b039960, not in the current service tree.
 
-## Ownership for the next cards
-
-Implementation card: HTTP modules, isolation strategy, real diagnostics mapping,
-server entrypoint, Bun service tests and any verified dependency adjustment.
-Container/docs card: Dockerfile, .dockerignore, README and operations docs. Use
-the contract's scripts without adding another lockfile or touching HTTP modules.
-QA/release children handle completed HTTP/image acceptance and final publication.
-This foundation task does not push to the remote.
 
 ## Upstream references
 

@@ -23,10 +23,12 @@ curl --fail-with-body http://127.0.0.1:3000/validate \
 ```
 
 - [Operations](docs/operations.md): installation, Docker, examples, settings, tests.
-- [API contract](docs/api.md): both routes, limits, errors and position semantics.
+- [API contract (OpenAPI 3.1.1)](docs/openapi.yaml): the single source of truth for
+  routes, schemas, limits, errors and position semantics.
+- [API guide](docs/api.md): specification navigation and `pnpm check:openapi`.
 - [Tests and coverage](docs/testing.md): reproducible commands, scope and known gaps.
 - [Baseline](docs/baseline.md): original snapshot and toolchain decisions.
-- [Historical Node library](docs/legacy-library.md): not the HTTP service API.
+
 
 License: [BSD-3-Clause](LICENSE), copyright Castalia. Dependency licenses remain
 those of their respective copyright holders.

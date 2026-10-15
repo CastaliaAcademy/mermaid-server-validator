@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test';
-import fixtures from '../test/fixtures/compatibility.json';
+import fixtures from './fixtures/compatibility.json';
 import { createValidator } from '../src/http-validator.js';
 
 test('Bun isolated HTTP engine accepts the preserved real-parser corpus', async () => {

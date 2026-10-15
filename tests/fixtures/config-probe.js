@@ -1,7 +1,13 @@
-import { parentPort, workerData } from 'node:worker_threads';
+// Private test subprocess: exercise the real DOM/engine without shared globals.
+const workerData = await Bun.stdin.json();
+let dom;
+for (const method of ['log', 'warn', 'error', 'info', 'debug', 'trace']) console[method] = () => {};
+let result;
 try {
  const { initializeEngine } = await import('../../src/engine.js');
- const { mermaid, dom } = await initializeEngine();
+ const engine = await initializeEngine();
+ const { mermaid } = engine;
+ dom = engine.dom;
  const keys = ['secure','securityLevel','startOnLoad','maxTextSize','maxEdges','suppressErrorRendering','dompurifyConfig','themeCSS','htmlLabels','theme','themeVariables'];
  const before = Object.fromEntries(keys.map(key => [key, JSON.stringify(mermaid.mermaidAPI.getConfig()[key])]));
  const parsed = await mermaid.parse(workerData.source);
@@ -19,6 +25,7 @@ try {
    dom.window.document.body.append(frame, image, style);
  }
  await new Promise(resolve => setTimeout(resolve, 20));
- parentPort.postMessage({changed, securityLevel: after.securityLevel, htmlLabels: after.htmlLabels, startOnLoad: after.startOnLoad, suppressErrorRendering: after.suppressErrorRendering, secure: after.secure, diagramType: parsed.diagramType, scriptExecuted: !!dom.window.__executed, externalScriptLoaded: !!dom.window.__loaded});
- dom.window.close();
-} catch(error) {parentPort.postMessage({error: error.message});}
+ result = {changed, securityLevel: after.securityLevel, htmlLabels: after.htmlLabels, startOnLoad: after.startOnLoad, suppressErrorRendering: after.suppressErrorRendering, secure: after.secure, diagramType: parsed.diagramType, scriptExecuted: !!dom.window.__executed, externalScriptLoaded: !!dom.window.__loaded};
+} catch(error) {result = {error: error.message};}
+finally {dom?.window.close();}
+process.stdout.write(JSON.stringify(result));
