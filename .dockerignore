@@ -1,0 +1,17 @@
+# Allowlist: never send Git history, credentials, local tools or tests.
+**
+!Dockerfile
+!.dockerignore
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!bunfig.toml
+!LICENSE
+!src/
+!src/**
+# Defense in depth if generated files accidentally appear under src/.
+**/.env*
+**/*.pem
+**/*.key
+**/node_modules
+**/*.log
