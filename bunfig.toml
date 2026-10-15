@@ -1,0 +1,6 @@
+# Dependencies are installed only by pnpm, never implicitly by Bun.
+[install]
+auto = "disable"
+
+[test]
+root = "./tests"
