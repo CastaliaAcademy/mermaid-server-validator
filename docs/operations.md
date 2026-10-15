@@ -1,8 +1,8 @@
 # Installation and operation
 
 Run commands from the repository root. The normative interface is [api.md](api.md).
-The HTTP implementation is developed separately from this container/documentation
-change; full HTTP and container acceptance belongs to the final integration task.
+See [release verification](release-verification.md) for the clean-checkout and
+read-only container acceptance results.
 
 ## Install and run locally
 
@@ -159,7 +159,7 @@ After a frozen install, with Bun and pnpm on PATH:
 
 ```sh
 pnpm test                  # Bun service/toolchain tests in tests/
-pnpm exec bun test --coverage ./tests
+pnpm test:coverage         # both suites, all src/*.js, line/branch thresholds
 pnpm check                 # TypeScript declaration check
 pnpm test:legacy           # preserved Node library regression suite
 ```
