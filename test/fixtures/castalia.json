@@ -1,0 +1,14 @@
+[
+  {
+    "id": "catalog.conspectsById.markdown-layout-lab:0",
+    "source": "flowchart TD\n  A[\"Открыть урок\"] --> B[\"Прочитать конспект\"]\n  B --> C{\"Всё понятно?\"}\n  C -->|Да| D[\"Решить задания\"]\n  C -->|Нет| E[\"Задать вопрос ИИ-куратору\"]\n  E --> B\n  D --> F[\"Повторить через неделю\"]"
+  },
+  {
+    "id": "catalog.conspectsById.markdown-layout-lab:1",
+    "source": "sequenceDiagram\n  participant S as Студент\n  participant C as Castalia\n  participant AI as ИИ-куратор\n  S->>C: Вопрос по конспекту\n  C->>AI: Вопрос и контекст урока\n  AI-->>C: Объяснение с примером\n  C-->>S: Ответ и следующее задание"
+  },
+  {
+    "id": "catalog.conspectsById.markdown-layout-lab:2",
+    "source": "stateDiagram-v2\n  [*] --> Available\n  Available --> Studying: Открыть урок\n  Studying --> Reviewing: Решить задания\n  Reviewing --> Studying: Повторить материал\n  Reviewing --> Completed: Всё верно\n  Completed --> [*]"
+  }
+]

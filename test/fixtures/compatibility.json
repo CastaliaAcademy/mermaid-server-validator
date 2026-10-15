@@ -1,0 +1,170 @@
+[
+  {
+    "id": "catalog.conspectsById.markdown-layout-lab:0",
+    "source": "flowchart TD\n  A[\"Открыть урок\"] --> B[\"Прочитать конспект\"]\n  B --> C{\"Всё понятно?\"}\n  C -->|Да| D[\"Решить задания\"]\n  C -->|Нет| E[\"Задать вопрос ИИ-куратору\"]\n  E --> B\n  D --> F[\"Повторить через неделю\"]",
+    "expected": {
+      "valid": true,
+      "diagramType": "flowchart-v2"
+    }
+  },
+  {
+    "id": "catalog.conspectsById.markdown-layout-lab:1",
+    "source": "sequenceDiagram\n  participant S as Студент\n  participant C as Castalia\n  participant AI as ИИ-куратор\n  S->>C: Вопрос по конспекту\n  C->>AI: Вопрос и контекст урока\n  AI-->>C: Объяснение с примером\n  C-->>S: Ответ и следующее задание",
+    "expected": {
+      "valid": true,
+      "diagramType": "sequence"
+    }
+  },
+  {
+    "id": "catalog.conspectsById.markdown-layout-lab:2",
+    "source": "stateDiagram-v2\n  [*] --> Available\n  Available --> Studying: Открыть урок\n  Studying --> Reviewing: Решить задания\n  Reviewing --> Studying: Повторить материал\n  Reviewing --> Completed: Всё верно\n  Completed --> [*]",
+    "expected": {
+      "valid": true,
+      "diagramType": "stateDiagram"
+    }
+  },
+  {
+    "id": "flow-label-regression",
+    "source": "flowchart TD\n A[Hello]-->B[World]",
+    "expected": {
+      "valid": true,
+      "diagramType": "flowchart-v2"
+    }
+  },
+  {
+    "id": "class",
+    "source": "classDiagram\n Animal <|-- Duck\n Animal : +int age\n Duck : +quack()",
+    "expected": {
+      "valid": true,
+      "diagramType": "classDiagram"
+    }
+  },
+  {
+    "id": "er",
+    "source": "erDiagram\n CUSTOMER ||--o{ ORDER : places",
+    "expected": {
+      "valid": true,
+      "diagramType": "er"
+    }
+  },
+  {
+    "id": "gantt",
+    "source": "gantt\n title Plan\n dateFormat YYYY-MM-DD\n section Work\n Task :a1, 2026-10-15, 2d",
+    "expected": {
+      "valid": true,
+      "diagramType": "gantt"
+    }
+  },
+  {
+    "id": "pie",
+    "source": "pie title Example\n \"A\" : 40\n \"B\" : 60",
+    "expected": {
+      "valid": true,
+      "diagramType": "pie"
+    }
+  },
+  {
+    "id": "mindmap",
+    "source": "mindmap\n root((Castalia))\n  Lessons\n  Practice",
+    "expected": {
+      "valid": true,
+      "diagramType": "mindmap"
+    }
+  },
+  {
+    "id": "git",
+    "source": "gitGraph\n commit\n branch feature\n checkout feature\n commit",
+    "expected": {
+      "valid": true,
+      "diagramType": "gitGraph"
+    }
+  },
+  {
+    "id": "journey",
+    "source": "journey\n title Lesson\n section Learn\n Read: 5: Student\n Practice: 4: Student",
+    "expected": {
+      "valid": true,
+      "diagramType": "journey"
+    }
+  },
+  {
+    "id": "timeline",
+    "source": "timeline\n title History\n 2025 : Idea\n 2026 : Launch",
+    "expected": {
+      "valid": true,
+      "diagramType": "timeline"
+    }
+  },
+  {
+    "id": "quadrant",
+    "source": "quadrantChart\n title Skills\n x-axis Low --> High\n y-axis Low --> High\n Student: [0.3, 0.6]",
+    "expected": {
+      "valid": true,
+      "diagramType": "quadrantChart"
+    }
+  },
+  {
+    "id": "xy",
+    "source": "xychart-beta\n x-axis [jan, feb, mar]\n y-axis \"Count\" 0 --> 20\n bar [5, 10, 15]",
+    "expected": {
+      "valid": true,
+      "diagramType": "xychart"
+    }
+  },
+  {
+    "id": "html-label",
+    "source": "flowchart TD\n A[\"<b>Hello</b>\"] --> B[\"Привет 👋\"]",
+    "expected": {
+      "valid": true,
+      "diagramType": "flowchart-v2"
+    }
+  },
+  {
+    "id": "directive",
+    "source": "%%{init: {\"securityLevel\":\"loose\",\"htmlLabels\":true}}%%\nflowchart TD\n A[\"<b>Hello</b>\"] --> B",
+    "expected": {
+      "valid": true,
+      "diagramType": "flowchart-v2"
+    }
+  },
+  {
+    "id": "frontmatter",
+    "source": "---\nconfig:\n  securityLevel: loose\n  htmlLabels: true\n---\nflowchart TD\n A[\"Hello\"] --> B",
+    "expected": {
+      "valid": true,
+      "diagramType": "flowchart-v2"
+    }
+  },
+  {
+    "id": "bad-flow",
+    "source": "flowchart TD\n A -->",
+    "expected": {
+      "valid": false,
+      "kind": "syntax"
+    }
+  },
+  {
+    "id": "bad-sequence",
+    "source": "sequenceDiagram\n Alice->>Bob",
+    "expected": {
+      "valid": false,
+      "kind": "syntax"
+    }
+  },
+  {
+    "id": "unknown",
+    "source": "notADiagram\n A --> B",
+    "expected": {
+      "valid": false,
+      "kind": "syntax"
+    }
+  },
+  {
+    "id": "fenced",
+    "source": "```mermaid\nflowchart TD\n A --> B\n```",
+    "expected": {
+      "valid": false,
+      "kind": "syntax"
+    }
+  }
+]

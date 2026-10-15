@@ -1,0 +1,25 @@
+node_modules/
+*.tgz
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated evidence, caches, local runtimes and output
+reports/
+coverage/
+dist/
+.cache/
+.tools/
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# pnpm is the only dependency manager / lockfile
+package-lock.json
+yarn.lock
+bun.lock
+bun.lockb
